@@ -5,14 +5,14 @@ Version:	1.3.2
 Release:	2
 License:	GPL
 Group:		Development/Version Control
-URL:		http://prcs.sourceforge.net/
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}//%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0:		%{name}-man.patch
 Patch1:		%{name}-perl.patch
-BuildRequires:	libstdc++-devel
-BuildRequires:	xemacs
+URL:		http://prcs.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	libstdc++-devel
+BuildRequires:	xemacs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
