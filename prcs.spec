@@ -2,7 +2,7 @@ Summary:	Project Revision Control System
 Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
 Version:	1.2.15
-Release:	1
+Release:	2
 License:	GPL
 Group:		Development/Version Control
 Group(de):	Entwicklung/Versionkontrolle
