@@ -1,41 +1,54 @@
 Summary:	Project Revision Control System
+Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
-Version:	1.2.15
-Release:	1
+Version:	1.3.2
+Release:	2
 License:	GPL
 Group:		Development/Version Control
-Group(pl):	Programowanie/Zarz±dzanie wersjami
-URL:		http://www.XCF.Berkeley.EDU/~jmacd/prcs.html
-Source:		ftp://ftp.XCF.Berkeley.EDU/pub/%{name}-%{version}.tar.gz
-Patch0:		prcs-el.patch
-Patch1:		prcs-man.patch
-Patch2:		prcs-rprcs-ssh.patch
+URL:		http://prcs.sourceforge.net/
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}//%{name}-%{version}.tar.gz
+Patch0:		%{name}-man.patch
+Patch1:		%{name}-perl.patch
+BuildRequires:	libstdc++-devel
+BuildRequires:	xemacs
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 PRCS is a simplified directory tree project oriented revision control
 system.
 
-%package el
-Summary:	PRCS mode for EMACS
-Group:		Development/Version Control
-Group(pl):	Programowanie/Zarz±dzanie wersjami
-Requires:	%{name} = %{version}
-Requires:	emacs
+%description -l pl
+PRCS to uproszczony, zorientowany na drzewo katalogowe system kontroli
+wersji.
 
-%description el
-PRCS mode for EMACS
+%package -n xemacs-prcs-pkg
+Summary:	PRCS mode for EMACS
+Summary(pl):	Tryb PRCS dla EMACS-a
+Group:		Development/Version Control
+Requires:	%{name} = %{version}
+Requires:	xemacs
+Obsoletes:	prcs-el
+
+%description -n xemacs-prcs-pkg
+PRCS mode for EMACS.
+
+%description -n xemacs-prcs-pkg -l pl
+Tryb PRCS dla EMACS-a.
 
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
-autoconf
-automake
-CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti -fno-exceptions" ; export CXXFLAGS
+rm -f missing
+aclocal
+autoheader
+%{__autoconf}
+%{__automake}
+CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
 %configure
 
 %{__make}
@@ -44,17 +57,10 @@ CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti -fno-exceptions" ; export CXXFLAGS
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	lispdir=%{_datadir}/xemacs/site-lisp
 
-install man/* $RPM_BUILD_ROOT%{_mandir}/man1/
-install scripts/rprcs $RPM_BUILD_ROOT%{_bindir}
-
-strip --strip-unneeded $RPM_BUILD_ROOT%{_bindir}/* || :
-
-gzip -9nf ANNOUNCE AUTHORS NEWS README FAQ ChangeLog \
-	scripts/rprcs_session.log scripts/README.rprcs \
-	$RPM_BUILD_ROOT%{_mandir}/man1/* \
-	$RPM_BUILD_ROOT%{_infodir}/*info*
+install man/* $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -67,12 +73,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {ANNOUNCE,AUTHORS,NEWS,README,FAQ,ChangeLog}.gz
-%doc scripts/rprcs_session.log.gz scripts/README.rprcs.gz
+%doc AUTHORS NEWS README README.BE FAQ ChangeLog
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
-%{_infodir}/*info*.gz
+%{_infodir}/*info*
 
-%files el
+%files -n xemacs-prcs-pkg
 %defattr(644,root,root,755)
-%{_datadir}/emacs/site-lisp/*
+%{_datadir}/xemacs/site-lisp/*

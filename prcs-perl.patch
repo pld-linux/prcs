@@ -1,0 +1,18 @@
+diff -uNr prcs-1.3.2.old/emacs/prcs-ediff prcs-1.3.2/emacs/prcs-ediff
+--- prcs-1.3.2.old/emacs/prcs-ediff	Fri May  3 18:10:00 2002
++++ prcs-1.3.2/emacs/prcs-ediff	Tue Aug  6 14:14:21 2002
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl5
++#!/usr/bin/perl
+ # Original author: Ulrich Pfeifer
+ # modified jglick@sig.bsh.com:
+ # $Id$
+diff -uNr prcs-1.3.2.old/emacs/prcs-emerge prcs-1.3.2/emacs/prcs-emerge
+--- prcs-1.3.2.old/emacs/prcs-emerge	Fri May  3 18:10:00 2002
++++ prcs-1.3.2/emacs/prcs-emerge	Tue Aug  6 14:14:30 2002
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ #                              -*- Mode: Perl -*-
+ # $Basename: prcs-emerge $
+ # $Revision$
