@@ -49,7 +49,7 @@ rm -f missing
 aclocal
 autoheader
 autoconf
-automake -a -c
+automake -a -c -f
 CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
 %configure
 
