@@ -4,12 +4,13 @@ Version:	1.2.15
 Release:	1
 License:	GPL
 Group:		Development/Version Control
+Group(de):	Entwicklung/Versionkontrolle
 Group(pl):	Programowanie/Zarz±dzanie wersjami
 URL:		http://www.XCF.Berkeley.EDU/~jmacd/prcs.html
-Source:		ftp://ftp.XCF.Berkeley.EDU/pub/%{name}-%{version}.tar.gz
-Patch0:		prcs-el.patch
-Patch1:		prcs-man.patch
-Patch2:		prcs-rprcs-ssh.patch
+Source0:	ftp://ftp.XCF.Berkeley.EDU/pub/%{name}-%{version}.tar.gz
+Patch0:		%{name}-el.patch
+Patch1:		%{name}-man.patch
+Patch2:		%{name}-rprcs-ssh.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -21,6 +22,7 @@ system.
 %package el
 Summary:	PRCS mode for EMACS
 Group:		Development/Version Control
+Group(de):	Entwicklung/Versionkontrolle
 Group(pl):	Programowanie/Zarz±dzanie wersjami
 Requires:	%{name} = %{version}
 Requires:	xemacs
@@ -36,8 +38,8 @@ PRCS mode for EMACS.
 
 %build
 autoconf
-automake
-CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti -fno-exceptions" ; export CXXFLAGS
+automake -a -c
+CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
 %configure
 
 %{__make}
