@@ -5,13 +5,24 @@ Version:	1.2.15
 Release:	2
 License:	GPL
 Group:		Development/Version Control
+Group(cs):	Vıvojové prostøedky/Správ verzí
+Group(da):	Udvikling/Versionskontrol
 Group(de):	Entwicklung/Versionkontrolle
+Group(es):	Desarrollo/Control de Versiones
+Group(fr):	Development/Contrôle de version
+Group(is):	Şróunartól/Útgáfu Stıring
+Group(it):	Sviluppo/Controllo della versione
+Group(no):	Utvikling/Versjonskontroll
 Group(pl):	Programowanie/Zarz±dzanie wersjami
+Group(pt):	Desenvolvimento/Controlo de Versões
+Group(ru):	òÁÚÒÁÂÏÔËÁ/ëÏÎÔÒÏÌØ ×ÅÒÓÉÊ
+Group(sl):	Razvoj/Nadzor razlièic
+Group(sv):	Utveckling/Versionshantering
 URL:		http://www.XCF.Berkeley.EDU/~jmacd/prcs.html
 Source0:	ftp://ftp.XCF.Berkeley.EDU/pub/%{name}-%{version}.tar.gz
 Patch0:		%{name}-el.patch
 Patch1:		%{name}-man.patch
-Patch2:		%{name}-rprcs-ssh.patch
+Patch2:		%{name}-r%{name}-ssh.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
 BuildRequires:	autoconf
@@ -30,8 +41,19 @@ wersji.
 Summary:	PRCS mode for EMACS
 Summary(pl):	Tryb PRCS dla EMACS-a
 Group:		Development/Version Control
+Group(cs):	Vıvojové prostøedky/Správ verzí
+Group(da):	Udvikling/Versionskontrol
 Group(de):	Entwicklung/Versionkontrolle
+Group(es):	Desarrollo/Control de Versiones
+Group(fr):	Development/Contrôle de version
+Group(is):	Şróunartól/Útgáfu Stıring
+Group(it):	Sviluppo/Controllo della versione
+Group(no):	Utvikling/Versjonskontroll
 Group(pl):	Programowanie/Zarz±dzanie wersjami
+Group(pt):	Desenvolvimento/Controlo de Versões
+Group(ru):	òÁÚÒÁÂÏÔËÁ/ëÏÎÔÒÏÌØ ×ÅÒÓÉÊ
+Group(sl):	Razvoj/Nadzor razlièic
+Group(sv):	Utveckling/Versionshantering
 Requires:	%{name} = %{version}
 Requires:	xemacs
 
