@@ -70,6 +70,8 @@ Tryb PRCS dla EMACS-a.
 %patch2 -p1
 
 %build
+rm -f missing
+aclocal
 autoconf
 automake -a -c
 CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
