@@ -10,6 +10,8 @@ Source:		ftp://ftp.XCF.Berkeley.EDU/pub/%{name}-%{version}.tar.gz
 Patch0:		prcs-el.patch
 Patch1:		prcs-man.patch
 Patch2:		prcs-rprcs-ssh.patch
+BuildRequires:	libstdc++-devel
+BuildRequires:	xemacs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -21,10 +23,10 @@ Summary:	PRCS mode for EMACS
 Group:		Development/Version Control
 Group(pl):	Programowanie/Zarz±dzanie wersjami
 Requires:	%{name} = %{version}
-Requires:	emacs
+Requires:	xemacs
 
 %description el
-PRCS mode for EMACS
+PRCS mode for EMACS.
 
 %prep
 %setup -q
@@ -35,6 +37,7 @@ PRCS mode for EMACS
 %build
 autoconf
 automake
+LDFLAGS="-s"; export LDFLAGS
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti -fno-exceptions" ; export CXXFLAGS
 %configure
 
@@ -48,8 +51,6 @@ rm -rf $RPM_BUILD_ROOT
 
 install man/* $RPM_BUILD_ROOT%{_mandir}/man1/
 install scripts/rprcs $RPM_BUILD_ROOT%{_bindir}
-
-strip --strip-unneeded $RPM_BUILD_ROOT%{_bindir}/* || :
 
 gzip -9nf ANNOUNCE AUTHORS NEWS README FAQ ChangeLog \
 	scripts/rprcs_session.log scripts/README.rprcs \
@@ -67,12 +68,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {ANNOUNCE,AUTHORS,NEWS,README,FAQ,ChangeLog}.gz
-%doc scripts/rprcs_session.log.gz scripts/README.rprcs.gz
+%doc *.gz scripts/*.gz
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
-%{_infodir}/*info*.gz
+%{_infodir}/*info*
 
 %files el
 %defattr(644,root,root,755)
-%{_datadir}/emacs/site-lisp/*
+%{_datadir}/xemacs/site-lisp/*
