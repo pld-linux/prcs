@@ -6,7 +6,7 @@ Release:	1
 License:	GPL
 Group:		Development/Version Control
 URL:		http://prcs.sourceforge.net/
-Source0:	http://telia.dl.sourceforge.net/sourceforge/%{name}//%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}//%{name}-%{version}.tar.gz
 Patch0:		%{name}-man.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
