@@ -37,7 +37,6 @@ PRCS mode for EMACS.
 %build
 autoconf
 automake
-LDFLAGS="-s"; export LDFLAGS
 CXXFLAGS="$RPM_OPT_FLAGS -fno-rtti -fno-exceptions" ; export CXXFLAGS
 %configure
 
@@ -53,9 +52,7 @@ install man/* $RPM_BUILD_ROOT%{_mandir}/man1/
 install scripts/rprcs $RPM_BUILD_ROOT%{_bindir}
 
 gzip -9nf ANNOUNCE AUTHORS NEWS README FAQ ChangeLog \
-	scripts/rprcs_session.log scripts/README.rprcs \
-	$RPM_BUILD_ROOT%{_mandir}/man1/* \
-	$RPM_BUILD_ROOT%{_infodir}/*info*
+	scripts/rprcs_session.log scripts/README.rprcs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
