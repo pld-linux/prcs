@@ -48,8 +48,8 @@ Tryb PRCS dla EMACS-a.
 rm -f missing
 aclocal
 autoheader
-autoconf
-automake -a -c -f
+%{__autoconf}
+%{__automake}
 CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
 %configure
 
