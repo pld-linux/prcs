@@ -37,7 +37,7 @@ system.
 PRCS to uproszczony, zorientowany na drzewo katalogowe system kontroli
 wersji.
 
-%package el
+%package -n xemacs-prcs-pkg
 Summary:	PRCS mode for EMACS
 Summary(pl):	Tryb PRCS dla EMACS-a
 Group:		Development/Version Control
@@ -56,11 +56,12 @@ Group(sl):	Razvoj/Nadzor razlièic
 Group(sv):	Utveckling/Versionshantering
 Requires:	%{name} = %{version}
 Requires:	xemacs
+Obsoletes:	prcs-el
 
-%description el
+%description -n xemacs-prcs-pkg
 PRCS mode for EMACS.
 
-%description el -l pl
+%description -n xemacs-prcs-pkg -l pl
 Tryb PRCS dla EMACS-a.
 
 %prep
@@ -72,6 +73,7 @@ Tryb PRCS dla EMACS-a.
 %build
 rm -f missing
 aclocal
+autoheader
 autoconf
 automake -a -c
 CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
@@ -83,7 +85,8 @@ CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	lispdir=%{_datadir}/xemacs/site-lisp
 
 install man/* $RPM_BUILD_ROOT%{_mandir}/man1
 install scripts/rprcs $RPM_BUILD_ROOT%{_bindir}
@@ -107,6 +110,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 %{_infodir}/*info*
 
-%files el
+%files -n xemacs-prcs-pkg
 %defattr(644,root,root,755)
 %{_datadir}/xemacs/site-lisp/*
