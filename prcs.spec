@@ -7,9 +7,7 @@ License:	GPL
 Group:		Development/Version Control
 URL:		http://prcs.sourceforge.net/
 Source0:	http://telia.dl.sourceforge.net/sourceforge/%{name}//%{name}-%{version}.tar.gz
-Patch0:		%{name}-el.patch
-Patch1:		%{name}-man.patch
-Patch2:		%{name}-ac_fix.patch
+Patch0:		%{name}-man.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
 BuildRequires:	autoconf
@@ -40,9 +38,7 @@ Tryb PRCS dla EMACS-a.
 
 %prep
 %setup -q
-#%patch0 -p1
-%patch1 -p1
-#%patch2
+%patch0 -p1
 
 %build
 rm -f missing
