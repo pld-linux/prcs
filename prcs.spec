@@ -2,18 +2,21 @@ Summary:	Project Revision Control System
 Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
 Version:	1.3.2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Development/Version Control
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # Source0-md5:	e18a0566d512ea4ef7018a9b4158ff8f
 Patch0:		%{name}-man.patch
 Patch1:		%{name}-perl.patch
+Patch2:		%{name}-gcc3.patch
 URL:		http://prcs.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	xemacs
+BuildRequires:	xemacs-ediff-pkg
+BuildRequires:	xemacs-emerge-pkg
+BuildRequires:	xemacs-vc-pkg
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -28,7 +31,7 @@ wersji.
 Summary:	PRCS mode for EMACS
 Summary(pl):	Tryb PRCS dla EMACS-a
 Group:		Development/Version Control
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	xemacs
 Obsoletes:	prcs-el
 
@@ -42,15 +45,21 @@ Tryb PRCS dla EMACS-a.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
+rm -f emacs/*.elc
 
 %build
-rm -f missing
 %{__aclocal}
 %{__autoheader}
 %{__autoconf}
 %{__automake}
 CXXFLAGS="%{rpmcflags} -fno-rtti -fno-exceptions"
-%configure
+%configure \
+	SYS_RCS_COMMAND_PATH="/usr/bin/rcs" \
+	SYS_CI_COMMAND_PATH="/usr/bin/ci" \
+	SYS_CO_COMMAND_PATH="/usr/bin/co" \
+	SYS_RLOG_COMMAND_PATH="/usr/bin/rlog"
 
 %{__make}
 
