@@ -6,6 +6,7 @@ Release:	2
 License:	GPL
 Group:		Development/Version Control
 Source0:	http://dl.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+# Source0-md5:	e18a0566d512ea4ef7018a9b4158ff8f
 Patch0:		%{name}-man.patch
 Patch1:		%{name}-perl.patch
 URL:		http://prcs.sourceforge.net/
