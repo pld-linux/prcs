@@ -1,0 +1,256 @@
+--- prcs-1.2.15/scripts/rprcs~	Tue Nov  9 23:40:24 1999
++++ prcs-1.2.15/scripts/rprcs	Mon Jul 17 04:13:59 2000
+@@ -24,7 +24,7 @@
+ # $ProjectHeader: prcs 1.2-release.94 Tue, 09 Nov 1999 14:40:19 -0800 jmacd $
+ # $Id$
+ #
+-#   prcs front end with remote execution extensions using rsh/ssh and rsync
++#   prcs front end with remote execution extensions using ssh and rsync
+ #
+ #   $ProjectHeader: prcs 1.2-release.94 Tue, 09 Nov 1999 14:40:19 -0800 jmacd $
+ #   $Id$
+@@ -49,7 +49,7 @@
+ #		and unique in the file
+ #	3. dots in hostnames not escaped, could match any character in 
+ #		regexp's
+-#	4. user 'prcs' on server via rsh accessed
++#	4. user 'prcs' on server via ssh accessed
+ #	5. usage of PRCS_REPOSITORY on server side without setting it
+ #	6. use of side effect project.prj == project
+ #	7. use of directory /tmp/.prcs at remote host
+@@ -167,18 +167,18 @@
+ {
+     # create temp. dir at remote host for checkout
+ 
+-    rsh -l $PRCSUSER $1 "mkdir 2>/dev/null /tmp/.prcs ; mkdir 2>/dev/null /tmp/.prcs/$2 ; mkdir 2>/dev/null /tmp/.prcs/$2/$3"
++    ssh -l $PRCSUSER $1 "mkdir 2>/dev/null /tmp/.prcs ; mkdir 2>/dev/null /tmp/.prcs/$2 ; mkdir 2>/dev/null /tmp/.prcs/$2/$3"
+ 
+     # try to obtain readable lock with given contents
+ 
+-    rsh -l $PRCSUSER $1 "( umask 377 ; echo >/tmp/.prcs/$2/$3.lock \"$4\" )"
++    ssh -l $PRCSUSER $1 "( umask 377 ; echo >/tmp/.prcs/$2/$3.lock \"$4\" )"
+ 
+     # if lock file has given contents
+ 
+-    if [ "`rsh -l $PRCSUSER $1 cat /tmp/.prcs/$2/$3.lock`" = "$4" ]; then
++    if [ "`ssh -l $PRCSUSER $1 cat /tmp/.prcs/$2/$3.lock`" = "$4" ]; then
+ 
+ 	#echo "lock match : $4"
+-	#rsh -l $PRCSUSER $1 cat /tmp/.prcs/$2/$3.lock
++	#ssh -l $PRCSUSER $1 cat /tmp/.prcs/$2/$3.lock
+ 
+ 	# return success
+ 
+@@ -210,11 +210,11 @@
+ {
+     # if lock file has given contents
+ 
+-    if [ "`rsh -l $PRCSUSER $1 cat /tmp/.prcs/$2/$3.lock`" = "$4" ]; then
++    if [ "`ssh -l $PRCSUSER $1 cat /tmp/.prcs/$2/$3.lock`" = "$4" ]; then
+ 
+ 	# remove the lock
+ 
+-	rsh -l $PRCSUSER $1 rm -f /tmp/.prcs/$2/$3.lock
++	ssh -l $PRCSUSER $1 rm -f /tmp/.prcs/$2/$3.lock
+ 
+ 	# return success
+ 
+@@ -414,7 +414,7 @@
+ 
+     # get permission line for this project/branch from server site
+ 
+-    branchline=`rsh -l $PRCSUSER $1 "grep \"[[:space:]]$2[[:space:]]\" \\\$PRCS_REPOSITORY/$BRANCHFILE | grep \"[[:space:]]$3[[:space:]]\"" | grep "^\`id -un\`@\`uname -n\`"`
++    branchline=`ssh -l $PRCSUSER $1 "grep \"[[:space:]]$2[[:space:]]\" \\\$PRCS_REPOSITORY/$BRANCHFILE | grep \"[[:space:]]$3[[:space:]]\"" | grep "^\`id -un\`@\`uname -n\`"`
+ 
+     # get permissions
+ 
+@@ -456,11 +456,11 @@
+     local userline
+     local userperm
+ 
+-    #echo rsh -l $PRCSUSER $1 "grep $2@$3 \\\$PRCS_REPOSITORY/$USERFILE"
++    #echo ssh -l $PRCSUSER $1 "grep $2@$3 \\\$PRCS_REPOSITORY/$USERFILE"
+ 
+     # get permission line for user
+ 
+-    userline=`rsh -l $PRCSUSER $1 "grep $2@$3 \\\$PRCS_REPOSITORY/$USERFILE"`
++    userline=`ssh -l $PRCSUSER $1 "grep $2@$3 \\\$PRCS_REPOSITORY/$USERFILE"`
+ 
+     #echo "userline=$userline"
+ 
+@@ -511,7 +511,7 @@
+     #! \\\$PRCS_REPOSITORY is repository at remote site
+     #! perhaps better to put the thing between single quotes ?
+ 
+-    branchline=`rsh -l $PRCSUSER $1 "grep \"[[:space:]]$2[[:space:]]\" \\\$PRCS_REPOSITORY/$BRANCHFILE | grep \"[[:space:]]$3[[:space:]]\"" | grep "^\`id -un\`@\`uname -n\`"`
++    branchline=`ssh -l $PRCSUSER $1 "grep \"[[:space:]]$2[[:space:]]\" \\\$PRCS_REPOSITORY/$BRANCHFILE | grep \"[[:space:]]$3[[:space:]]\"" | grep "^\`id -un\`@\`uname -n\`"`
+ 
+     # get permissions
+ 
+@@ -555,7 +555,7 @@
+ 
+     # get permission line for this project/branch from server site
+ 
+-    branchline=`rsh -l $PRCSUSER $1 "grep \"[[:space:]]$2[[:space:]]\" \\\$PRCS_REPOSITORY/$BRANCHFILE | grep \"[[:space:]]$3[[:space:]]\"" | grep "^\`id -un\`@\`uname -n\`"`
++    branchline=`ssh -l $PRCSUSER $1 "grep \"[[:space:]]$2[[:space:]]\" \\\$PRCS_REPOSITORY/$BRANCHFILE | grep \"[[:space:]]$3[[:space:]]\"" | grep "^\`id -un\`@\`uname -n\`"`
+ 
+     # get permissions
+ 
+@@ -1008,7 +1008,7 @@
+ #   variables filled out :
+ #
+ #     PRCSCOMMAND	: one of the rprcs commands
+-#     PRCSUSER          : user for rsh
++#     PRCSUSER          : user for ssh
+ #     PRCSOPTIONS       : extra prcs options
+ #     PROJECT		: project name (without .prj)
+ #     PARENTMAJOR	: project parent branch
+@@ -1070,16 +1070,16 @@
+ 	# if this a new branch
+ 
+ 	#! prcs running on remote host
+-	#! `rsh | wc` running on localhost
++	#! `ssh | wc` running on localhost
+ 
+ 	#! never forget the minor version number for the checkouts, it lets prcs keep
+ 	#! track of ancestry relationships
+ 
+-	if [ "`rsh 2>/dev/null -l $PRCSUSER $PRCSHOST \"prcs 2>&1 info -fr $PROJECTMAJOR $PROJECT\" | wc -c`" -eq "0" ]; then
++	if [ "`ssh 2>/dev/null -l $PRCSUSER $PRCSHOST \"prcs 2>&1 info -fr $PROJECTMAJOR $PROJECT\" | wc -c`" -eq "0" ]; then
+ 
+ 	    # if this is a new project
+ 
+-	    if [ "`rsh 2>/dev/null -l $PRCSUSER $PRCSHOST \"prcs 2>&1 info -f $PROJECT\" | wc -c`" -eq "0" ]; then
++	    if [ "`ssh 2>/dev/null -l $PRCSUSER $PRCSHOST \"prcs 2>&1 info -f $PROJECT\" | wc -c`" -eq "0" ]; then
+ 
+ 		# perform sanity test : is parent branch not "-*-"
+ 
+@@ -1137,7 +1137,7 @@
+ 
+ 		# add project to remote branch file
+ 
+-		rsh -l $PRCSUSER $PRCSHOST "echo >>\$PRCS_REPOSITORY/$BRANCHFILE \"`id -un`@`uname -n`	\`uname -n\`	$PROJECT	$PROJECTMAJOR	rwb\""
++		ssh -l $PRCSUSER $PRCSHOST "echo >>\$PRCS_REPOSITORY/$BRANCHFILE \"`id -un`@`uname -n`	\`uname -n\`	$PROJECT	$PROJECTMAJOR	rwb\""
+ 
+ 	    # else
+ 
+@@ -1158,7 +1158,7 @@
+ 
+ 		# do checkout of parent branch in temp. dir
+ 
+-		rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs 2>/dev/null checkout -fr $PARENTMAJOR.$PARENTMINOR $PROJECT"
++		ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs 2>/dev/null checkout -fr $PARENTMAJOR.$PARENTMINOR $PROJECT"
+ 	    fi
+ 
+ 	# else
+@@ -1180,7 +1180,7 @@
+ 
+ 	    # do checkout of this branch
+ 
+-	    rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs 2>/dev/null checkout -fr $PROJECTMAJOR$DOTTEDPROJECTMINOR $PROJECT $*"
++	    ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs 2>/dev/null checkout -fr $PROJECTMAJOR$DOTTEDPROJECTMINOR $PROJECT $*"
+ 	fi
+ 
+ 	#t place New-Version-Log on a line of its own in project descriptor
+@@ -1210,11 +1210,11 @@
+ 
+ 	# do checkin on server
+ 
+-	rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs checkin -fr $PROJECTMAJOR $PRCSOPTIONS $PROJECT $*"
++	ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs checkin -fr $PROJECTMAJOR $PRCSOPTIONS $PROJECT $*"
+ 
+ 	# perform rekey on server
+ 
+-	#rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs -f rekey"
++	#ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs -f rekey"
+ 
+ 	# do rsync on client
+ 
+@@ -1262,7 +1262,7 @@
+ 
+ 	# remove all files from the directory
+ 
+-	rsh -l $PRCSUSER $PRCSHOST "rm 2>/dev/null -fr /tmp/.prcs/$PROJECT/$PROJECTMAJOR/* /tmp/.prcs/$PROJECT/$PROJECTMAJOR/.*"
++	ssh -l $PRCSUSER $PRCSHOST "rm 2>/dev/null -fr /tmp/.prcs/$PROJECT/$PROJECTMAJOR/* /tmp/.prcs/$PROJECT/$PROJECTMAJOR/.*"
+ 
+ 	# if project minor not set from command line
+ 
+@@ -1277,7 +1277,7 @@
+ 
+ 	# do checkout of this branch
+ 
+-	rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs checkout -fr $PROJECTMAJOR$DOTTEDPROJECTMINOR $PRCSOPTIONS $PROJECT $*"
++	ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs checkout -fr $PROJECTMAJOR$DOTTEDPROJECTMINOR $PRCSOPTIONS $PROJECT $*"
+ 
+ 	#echo $PRCSHOST
+ 	#echo $PROJECT
+@@ -1380,7 +1380,7 @@
+ 	#! to get rid of the annoying tabs produced by wc,
+ 	#! put between double backquotes
+ 
+-	numberofrevisions=`echo \`rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs 2>&1 info -fr $PROJECTMAJOR $PROJECT | wc -l"\``
++	numberofrevisions=`echo \`ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs 2>&1 info -fr $PROJECTMAJOR $PROJECT | wc -l"\``
+ 
+ 	# if minor version not from command line
+ 
+@@ -1388,7 +1388,7 @@
+ 
+ 	    # replace minor version with last in repo
+ 
+-	    PROJECTMINOR=`rsh -l $PRCSUSER $PRCSHOST "prcs 2>&1 info -fr $PROJECTMAJOR $PROJECT | tail -n 1 | cut -f 2 -d \" \" | cut -f 2 -d \".\""`
++	    PROJECTMINOR=`ssh -l $PRCSUSER $PRCSHOST "prcs 2>&1 info -fr $PROJECTMAJOR $PROJECT | tail -n 1 | cut -f 2 -d \" \" | cut -f 2 -d \".\""`
+ 
+ 	    echo "$0: Default minor version resolved to $PROJECTMINOR"
+ 	fi
+@@ -1404,7 +1404,7 @@
+ 
+ 	    # remove all files from the directory
+ 
+-	    rsh -l $PRCSUSER $PRCSHOST "rm 2>/dev/null -fr /tmp/.prcs/$PROJECT/$PROJECTMAJOR/* /tmp/.prcs/$PROJECT/$PROJECTMAJOR/.*"
++	    ssh -l $PRCSUSER $PRCSHOST "rm 2>/dev/null -fr /tmp/.prcs/$PROJECT/$PROJECTMAJOR/* /tmp/.prcs/$PROJECT/$PROJECTMAJOR/.*"
+ 
+ 	    # clear file with projects to sync
+ 
+@@ -1424,13 +1424,13 @@
+ 
+ 		# checkout the project descriptor
+ 
+-		rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; rm 2>/dev/null $PROJECT.prj ; prcs checkout -fr $PARENTMAJOR.$PARENTMINOR $PROJECT $PROJECT.prj"
++		ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; rm 2>/dev/null $PROJECT.prj ; prcs checkout -fr $PARENTMAJOR.$PARENTMINOR $PROJECT $PROJECT.prj"
+ 
+ 		# get parent project/branch/version from the project file
+ 
+-		PARENTPROJECT=`rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; grep 2>/dev/null \"Parent-Version\" *.prj | cut -d \" \" -f 2"`
+-		PARENTMAJOR=`rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; grep 2>/dev/null \"Parent-Version\" *.prj | cut -d \" \" -f 3"`
+-		PARENTMINOR=`rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; grep 2>/dev/null \"Parent-Version\" *.prj | cut -d \" \" -f 4 | cut -f 1 -d \")\""`
++		PARENTPROJECT=`ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; grep 2>/dev/null \"Parent-Version\" *.prj | cut -d \" \" -f 2"`
++		PARENTMAJOR=`ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; grep 2>/dev/null \"Parent-Version\" *.prj | cut -d \" \" -f 3"`
++		PARENTMINOR=`ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; grep 2>/dev/null \"Parent-Version\" *.prj | cut -d \" \" -f 4 | cut -f 1 -d \")\""`
+ 	    done
+ 
+ 	    # give diag's
+@@ -1489,13 +1489,13 @@
+ 
+ 		    # remove all files from remote directory
+ 
+-		    rsh -l $PRCSUSER $PRCSHOST "rm 2>/dev/null -fr /tmp/.prcs/$PROJECT/$PROJECTMAJOR/* /tmp/.prcs/$PROJECT/$PROJECTMAJOR/.*"
++		    ssh -l $PRCSUSER $PRCSHOST "rm 2>/dev/null -fr /tmp/.prcs/$PROJECT/$PROJECTMAJOR/* /tmp/.prcs/$PROJECT/$PROJECTMAJOR/.*"
+ 
+ 		    # do remote checkout of current version
+ 
+ 		    #echo --2
+ 
+-		    rsh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs checkout -f $projectrevision"
++		    ssh -l $PRCSUSER $PRCSHOST "cd /tmp/.prcs/$PROJECT/$PROJECTMAJOR ; prcs checkout -f $projectrevision"
+ 
+ 		    # run rsync on directories
+ 
+@@ -1665,7 +1665,7 @@
+ 
+ 	# give info on remote site repo
+ 
+-	rsh -l $PRCSUSER $PRCSHOST "prcs info -f $PRCSOPTIONS $PROJECT $*"
++	ssh -l $PRCSUSER $PRCSHOST "prcs info -f $PRCSOPTIONS $PROJECT $*"
+     ;;
+ 
+     # status

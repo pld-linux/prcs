@@ -1,0 +1,218 @@
+--- prcs-1.2.15.orig/man/prcs-clean.1
++++ prcs-1.2.15/man/prcs-clean.1
+@@ -0,0 +1,29 @@
++.\" -*- Nroff -*-
++.\" $Id$
++.TH PRCS-CLEAN 1 "PRCS Utilities" "Jun/03/1999" "PRCS Utilities"
++.SH NAME
++prcs-clean \- clean up a directory tree containing a PRCS-controlled project
++.SH SYNOPSIS
++.B prcs-clean 
++.I "project"
++.SH "DESCRIPTION"
++This manual page documents briefly the
++.BR prcs-clean ,
++command.
++This manual page was written for the Debian GNU/Linux distribution
++because the original program does not have a manual page.
++.PP
++.B prcs-clean
++is a program that cleans up a directory tree containing a
++PRCS-controlled project.  The mandatory argument is the name of the
++project from which all the files will be deleted.  Be careful: only
++use
++.B prcs-clean
++after having done a checkin (otherwise you will loose your project!).
++.SH "SEE ALSO"
++.BR prcs (1)
++.PP
++Info documentation for PRCS (type "info prcs")
++.SH AUTHOR
++This manual page was written by Rafael Laboissiere <rafael@icp.inpg.fr>,
++for the Debian GNU/Linux system (but may be used by others).
+--- prcs-1.2.15.orig/man/prcs-merge-command.1
++++ prcs-1.2.15/man/prcs-merge-command.1
+@@ -0,0 +1,27 @@
++.\" -*- Nroff -*-
++.TH PRCS-MERGE-COMMAND 1 "PRCS Utilities" "Jun/03/1999" "PRCS Utilities"
++.SH NAME
++prcs-merge-command \- Simple example for $PRCS_MERGE_COMMAND
++.SH SYNOPSIS
++.B PRCS_MERGE_COMMAND=prcs-merge-command prcs merge 
++[\fI...\fR]
++.SH "DESCRIPTION"
++This manual page documents briefly the
++.BR prcs-merge-command ,
++script.
++This manual page was written for the Debian GNU/Linux distribution
++because the original program does not have a manual page.
++.PP
++.B prcs-merge-command
++is a really simple demonstration on how to treat the arguments of a merge
++command for 
++.BR prcs (1), 
++determined by the environment variable PRCS_MERGE_COMMAND.
++Use it as a template for writing a more interesting command.
++.SH "SEE ALSO"
++.BR prcs (1),
++.PP
++Info documentation for PRCS (type "info prcs")
++.SH AUTHOR
++This manual page was written by Rafael Laboissiere <rafael@icp.inpg.fr>,
++for the Debian GNU/Linux system (but may be used by others).
+--- prcs-1.2.15.orig/man/prcs-diff-command.1
++++ prcs-1.2.15/man/prcs-diff-command.1
+@@ -0,0 +1,27 @@
++.\" -*- Nroff -*-
++.TH PRCS-DIFF-COMMAND 1 "PRCS Utilities" "Jun/03/1999" "PRCS Utilities"
++.SH NAME
++prcs-diff-command \- Simple example for $PRCS_DIFF_COMMAND
++.SH SYNOPSIS
++.B PRCS_DIFF_COMMAND=prcs-diff-command prcs diff 
++[\fI...\fR]
++.SH "DESCRIPTION"
++This manual page documents briefly the
++.BR prcs-diff-command ,
++script.
++This manual page was written for the Debian GNU/Linux distribution
++because the original program does not have a manual page.
++.PP
++.B prcs-diff-command
++is a really simple demonstration on how to treat the arguments of a diff
++command for 
++.BR prcs (1), 
++determined by the environment variable PRCS_DIFF_COMMAND.
++Use it as a template for writing a more interesting command.
++.SH "SEE ALSO"
++.BR prcs (1),
++.PP
++Info documentation for PRCS (type "info prcs")
++.SH AUTHOR
++This manual page was written by Rafael Laboissiere <rafael@icp.inpg.fr>,
++for the Debian GNU/Linux system (but may be used by others).
+--- prcs-1.2.15.orig/man/prcs-callback.1
++++ prcs-1.2.15/man/prcs-callback.1
+@@ -0,0 +1,45 @@
++.\" -*- Nroff -*-
++.de Vb
++.ft CW
++.nf
++.ne \\$1
++..
++.de Ve
++.ft R
++
++.fi
++..
++.TH PRCS-CALLBACK 1 "PRCS Utilities" "Jun/03/1999" "PRCS Utilities"
++.SH NAME
++prcs-callback \- Callback script for Ediff support in prcs.el
++.SH SYNOPSIS
++.B (setq prcs-callback-program "prcs-callback")
++.SH "DESCRIPTION"
++This manual page documents briefly the
++.BR prcs-merge-command ,
++script.
++This manual page was written for the Debian GNU/Linux distribution
++because the original program does not have a manual page.
++.PP
++.B prcs-callback 
++is associated with \fIprcs.el\fR.  When called with some
++number of arguments, this script: 
++.PP
++.Vb 4
++\&    1. Prints a special magic token on a line by itself.
++\&    2. Prints the number of args on a line by itself.
++\&    3. Prints each of the args in turn on their own lines.
++\&    4. Waits for input.
++\&    5. Reads a line (should be an integer), and exits with 
++\&       that status.
++.Ve
++It is used by \fIprcs.el\fR as a value for $PRCS_DIFF_COMMAND or
++$PRCS_MERGE_COMMAND. The token is used to identify its execution in a
++general comint buffer. 
++.SH "SEE ALSO"
++prcs(1),
++.PP
++Info documentation for PRCS (type "info prcs")
++.SH AUTHOR
++This manual page was written by Rafael Laboissiere <rafael@icp.inpg.fr>,
++for the Debian GNU/Linux system (but may be used by others).
+--- prcs-1.2.15.orig/man/prcs-emerge.1
++++ prcs-1.2.15/man/prcs-emerge.1
+@@ -0,0 +1,38 @@
++.\" -*- Nroff -*-
++.de Vb
++.ft CW
++.nf
++.ne \\$1
++..
++.de Ve
++.ft R
++
++.fi
++..
++.TH PRCS-EMERGE 1 "PRCS Utilities" "Jun/03/1999" "PRCS Utilities"
++.SH NAME
++prcs-emerge \- Sophisticated merge command for PRCS 
++.SH SYNOPSIS
++.B PRCS_MERGE_COMMAND=prcs-emerge prcs merge 
++[\fI...\fR]
++.SH "DESCRIPTION"
++This manual page documents briefly the
++.BR prcs-merge-command ,
++script.
++This manual page was written for the Debian GNU/Linux distribution
++because the original program does not have a manual page.
++.PP
++.B prcs-emerge
++is a sophisticated merge command for the 
++.BR prcs (1) 
++command, using the Ediff package for Emacs-Lisp through
++.BR gnudoit (1)
++and the \fIprcs.el\fR package.
++.SH "SEE ALSO"
++.BR prcs (1),
++.BR gnudoit (1),
++.PP
++Info documentation for PRCS (type "info prcs")
++.SH AUTHOR
++This manual page was written by Rafael Laboissiere <rafael@icp.inpg.fr>,
++for the Debian GNU/Linux system (but may be used by others).
+--- prcs-1.2.15.orig/man/rprcs.1
++++ prcs-1.2.15/man/rprcs.1
+@@ -0,0 +1,34 @@
++.\" -*- Nroff -*-
++.TH RPRCS 1 "PRCS Utilities" "Jun/03/1999" "PRCS Utilities"
++.SH NAME
++rprcs \- a front end for prcs to do checkins and checkouts at a remote site.
++.SH SYNOPSIS
++.B rprcs
++.I "PRCS_command [PRCS options] [-h remotehost] project"
++.SH "DESCRIPTION"
++This manual page documents briefly the
++.BR rprcs
++command.
++This manual page was written for the Debian GNU/Linux distribution
++because the original program does not have a manual page.
++.P
++.B rprcs
++is a front end for prcs that uses ssh and rsync to communicate with
++a remote site and do prcs's checkins and checkouts at the remote site.
++For the moment rprcs is one shell script that manages all related files,
++there is no real client and server as e.g. in prcs2. 
++.P
++.B rprcs 
++requires that a server containing the remote repository and running prcs
++and rsync be available. (See /usr/share/doc/prcs/README.rprcs for more
++information about the setup.)
++.SH "EXAMPLES"
++See /usr/share/doc/prcs/rprcs_session.log for an example of a session using 
++rprcs.
++.SH "SEE ALSO"
++.BR prcs (1)
++.P
++/usr/share/doc/prcs/README.rprcs 
++.SH AUTHOR
++This manual page was written by Rafael Laboissiere <rafael@icp.inpg.fr>,
++for the Debian GNU/Linux system (but may be used by others).
