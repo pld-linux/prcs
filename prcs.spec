@@ -1,15 +1,15 @@
 Summary:	Project Revision Control System
 Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
-Version:	1.2.15
-Release:	2
+Version:	1.3.0
+Release:	1
 License:	GPL
 Group:		Development/Version Control
-URL:		http://www.XCF.Berkeley.EDU/~jmacd/prcs.html
-Source0:	ftp://ftp.XCF.Berkeley.EDU/pub/%{name}-%{version}.tar.gz
+URL:		http://prcs.sourceforge.net/
+Source0:	http://telia.dl.sourceforge.net/sourceforge/%{name}//%{name}-%{version}.tar.gz
 Patch0:		%{name}-el.patch
 Patch1:		%{name}-man.patch
-Patch2:		%{name}-r%{name}-ssh.patch
+Patch2:		%{name}-ac_fix.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
 BuildRequires:	autoconf
@@ -42,7 +42,7 @@ Tryb PRCS dla EMACS-a.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%patch2
 
 %build
 rm -f missing
@@ -63,10 +63,6 @@ rm -rf $RPM_BUILD_ROOT
 	lispdir=%{_datadir}/xemacs/site-lisp
 
 install man/* $RPM_BUILD_ROOT%{_mandir}/man1
-install scripts/rprcs $RPM_BUILD_ROOT%{_bindir}
-
-gzip -9nf ANNOUNCE AUTHORS NEWS README FAQ ChangeLog \
-	scripts/rprcs_session.log scripts/README.rprcs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -79,7 +75,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz scripts/*.gz
+%doc ANNOUNCE AUTHORS NEWS README FAQ ChangeLog
 %attr(755,root,root) %{_bindir}/*
 %{_mandir}/man1/*
 %{_infodir}/*info*
