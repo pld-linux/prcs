@@ -8,7 +8,7 @@ Group:		Development/Version Control
 URL:		http://prcs.sourceforge.net/
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}//%{name}-%{version}.tar.gz
 Patch0:		%{name}-man.patch
-Patch0:		%{name}-perl.patch
+Patch1:		%{name}-perl.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
 BuildRequires:	autoconf
