@@ -2,12 +2,13 @@ Summary:	Project Revision Control System
 Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
 Version:	1.3.2
-Release:	1
+Release:	2
 License:	GPL
 Group:		Development/Version Control
 URL:		http://prcs.sourceforge.net/
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/%{name}//%{name}-%{version}.tar.gz
 Patch0:		%{name}-man.patch
+Patch0:		%{name}-perl.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
 BuildRequires:	autoconf
@@ -39,6 +40,7 @@ Tryb PRCS dla EMACS-a.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 rm -f missing
