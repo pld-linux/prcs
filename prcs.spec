@@ -1,7 +1,7 @@
 Summary:	Project Revision Control System
 Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
-Version:	1.3.0
+Version:	1.3.2
 Release:	1
 License:	GPL
 Group:		Development/Version Control
@@ -40,9 +40,9 @@ Tryb PRCS dla EMACS-a.
 
 %prep
 %setup -q
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
-%patch2
+#%patch2
 
 %build
 rm -f missing
