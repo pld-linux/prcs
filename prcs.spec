@@ -1,4 +1,5 @@
 Summary:	Project Revision Control System
+Summary(pl):	System kontroli wersji dla projektów
 Name:		prcs
 Version:	1.2.15
 Release:	1
@@ -13,14 +14,21 @@ Patch1:		%{name}-man.patch
 Patch2:		%{name}-rprcs-ssh.patch
 BuildRequires:	libstdc++-devel
 BuildRequires:	xemacs
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 PRCS is a simplified directory tree project oriented revision control
 system.
 
+%description -l pl
+PRCS to uproszczony, zorientowany na drzewo katalogowe system kontroli
+wersji.
+
 %package el
 Summary:	PRCS mode for EMACS
+Summary(pl):	Tryb PRCS dla EMACS-a
 Group:		Development/Version Control
 Group(de):	Entwicklung/Versionkontrolle
 Group(pl):	Programowanie/Zarz±dzanie wersjami
@@ -29,6 +37,9 @@ Requires:	xemacs
 
 %description el
 PRCS mode for EMACS.
+
+%description el -l pl
+Tryb PRCS dla EMACS-a.
 
 %prep
 %setup -q
@@ -50,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install man/* $RPM_BUILD_ROOT%{_mandir}/man1/
+install man/* $RPM_BUILD_ROOT%{_mandir}/man1
 install scripts/rprcs $RPM_BUILD_ROOT%{_bindir}
 
 gzip -9nf ANNOUNCE AUTHORS NEWS README FAQ ChangeLog \
