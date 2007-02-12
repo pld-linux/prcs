@@ -1,5 +1,5 @@
 Summary:	Project Revision Control System
-Summary(pl):	System kontroli wersji dla projektów
+Summary(pl.UTF-8):   System kontroli wersji dla projektÃ³w
 Name:		prcs
 Version:	1.3.2
 Release:	3
@@ -23,13 +23,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 PRCS is a simplified directory tree project oriented revision control
 system.
 
-%description -l pl
+%description -l pl.UTF-8
 PRCS to uproszczony, zorientowany na drzewo katalogowe system kontroli
 wersji.
 
 %package -n xemacs-prcs-pkg
 Summary:	PRCS mode for EMACS
-Summary(pl):	Tryb PRCS dla EMACS-a
+Summary(pl.UTF-8):   Tryb PRCS dla EMACS-a
 Group:		Development/Version Control
 Requires:	%{name} = %{version}-%{release}
 Requires:	xemacs
@@ -38,7 +38,7 @@ Obsoletes:	prcs-el
 %description -n xemacs-prcs-pkg
 PRCS mode for EMACS.
 
-%description -n xemacs-prcs-pkg -l pl
+%description -n xemacs-prcs-pkg -l pl.UTF-8
 Tryb PRCS dla EMACS-a.
 
 %prep
