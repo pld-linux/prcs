@@ -1,5 +1,5 @@
 Summary:	Project Revision Control System
-Summary(pl.UTF-8):   System kontroli wersji dla projektów
+Summary(pl.UTF-8):	System kontroli wersji dla projektów
 Name:		prcs
 Version:	1.3.2
 Release:	3
@@ -29,7 +29,7 @@ wersji.
 
 %package -n xemacs-prcs-pkg
 Summary:	PRCS mode for EMACS
-Summary(pl.UTF-8):   Tryb PRCS dla EMACS-a
+Summary(pl.UTF-8):	Tryb PRCS dla EMACS-a
 Group:		Development/Version Control
 Requires:	%{name} = %{version}-%{release}
 Requires:	xemacs
